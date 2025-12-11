@@ -225,7 +225,7 @@ public class RiddleTests {
         String input = "ANCHOR\n";
         riddle.setScanner(new Scanner(input));
         
-        boolean result = riddle.solveRiddle(testRiddle);
+        boolean result = riddle.solveRiddle(testRiddle, null);
         assertTrue("Should return true when riddle is solved", result);
     }
     
@@ -240,7 +240,7 @@ public void testSolveRiddleTenAttempts() {
     String input = "wrong\nwrong\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\n";
     riddle.setScanner(new Scanner(input));
     
-    boolean result = riddle.solveRiddle(testRiddle);
+    boolean result = riddle.solveRiddle(testRiddle, null);
     assertFalse("Should return false after 10 wrong attempts", result);
 }
     
