@@ -1,3 +1,7 @@
+
+
+
+
 import java.io.*;
 import java.util.*;
 
@@ -116,6 +120,8 @@ public class Riddle {
     public void playGame() {
         System.out.println(rules+"\n");
         Queue<String> riddlesToDo = selectRandomRiddles();
+        Stack<String> randomMessages = new Stack<>();
+        randomMessages.addAll(shuffledMessages());
         
         while (!riddlesToDo.isEmpty()) {
             String currentRiddle = riddlesToDo.poll();
@@ -130,16 +136,63 @@ public class Riddle {
         
         displayVictory();
     }
+
+    public ArrayList<String> shuffledMessages() {
+        ArrayList<String> shuffledMessages = new ArrayList<>();
+        shuffledMessages.add("are you even trying?");
+        shuffledMessages.add("come on, you can do better than that");
+        shuffledMessages.add("that's not it, try again");
+        shuffledMessages.add("wrong! how can you not get it?");
+        shuffledMessages.add("how can you be that dumb");
+        shuffledMessages.add("you call that a guess?");
+        shuffledMessages.add("nope, not even close");
+        shuffledMessages.add("do you even have a brain");
+        shuffledMessages.add("really? try again");
+        shuffledMessages.add("somewhere a village is missing it's idiot");
+        shuffledMessages.add("if your brains were dynamite they wouldn't be enough to blow your hat off");
+        shuffledMessages.add("you must be the human embodiment of a participation trophy");
+        shuffledMessages.add("you bring everyone around you down to your level");
+        shuffledMessages.add("you're like a cloud. when you disappear, it's a beautiful day");
+        shuffledMessages.add("you need to carry a plant to make up for the oxygen you waste");
+        shuffledMessages.add("you got lost in thought and never made it back didn't you");
+        shuffledMessages.add("you have a room temperature IQ");
+        shuffledMessages.add("you couldn't pour water out of a boot with insructions on the heel");
+        shuffledMessages.add("you're about as sharp as a marshmallow");
+        shuffledMessages.add("you're like a man with a fork in a world of soup");
+        shuffledMessages.add("a little too much chlorine in your gene pool huh");
+        shuffledMessages.add("I have neither the time nor the crayons to explain this to you");
+        shuffledMessages.add("you have a smooth brain, no ridges or lumps, valleys or bumps");
+        shuffledMessages.add("maybe you should go lie down");
+        shuffledMessages.add("useful as a chocolate teapot");
+        shuffledMessages.add("the lights are on but nobody's home");
+        shuffledMessages.add("you're about as quick as a snail on tranquilizers");
+        shuffledMessages.add("you're the reason we have warning labels");
+        shuffledMessages.add("you're not stupid; you just have bad luck when it comes to thinking");
+        shuffledMessages.add("you're proof that evolution can go in reverse");
+        shuffledMessages.add("you're as useless as the 'g' in lasagna");
+        shuffledMessages.add("if I sent you for an IQ test you would come back negative");
+        shuffledMessages.add("you're such a wet wipe");
+        shuffledMessages.add("intelligent thoughts have always followed you but you're too fast");
+        shuffledMessages.add("nice house no furniture");
+        shuffledMessages.add("true embodiment of you can lead a horse to water but you can't make it drink");
+        shuffledMessages.add("how do you keep getting dumber");
+        shuffledMessages.add("stupid is as stupid does");
+        shuffledMessages.add("every time you open your mouth you lower the average intelligence of the planet");
+        shuffledMessages.add("let me guess, you were born on a highway because that's where most accidents happen");
+        Collections.shuffle(shuffledMessages);
+        return shuffledMessages;
+    }
     
     /**
      * Handles the solving process for a single riddle
      * @param currentRiddle The riddle to solve
      * @return true if solved, false if player exceeded max attempts
      */
-    public boolean solveRiddle(String currentRiddle) {
+    public boolean solveRiddle(String currentRiddle, Stack randomMessages) {
         boolean solved = false;
         int attempts = 0;
         int hintsUsed = 0;
+        //ArrayList<String> messages = wrongStack();
         
         while (!solved) {
             System.out.println(currentRiddle);
@@ -152,10 +205,14 @@ public class Riddle {
             }
             else {
                 attempts++;
-                if (attempts == 10) {
+                if (attempts == 11) {
                     return false; // Player lost
                 }
                 System.out.println("wrong! how can you not get it?");
+                //Print out random message from randomized stack and pop off
+                if (!randomMessages.isEmpty()) {
+                    System.out.println(randomMessages.pop());
+                }
                 
                 if (attempts >= 3) {
                     hintsUsed = offerHint(currentRiddle, attempts, hintsUsed);
