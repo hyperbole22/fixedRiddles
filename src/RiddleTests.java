@@ -221,11 +221,13 @@ public class RiddleTests {
         riddle.loadRiddles();
         riddle.loadHints();
         String testRiddle = riddle.getRiddleMap().get("ANCHOR");
+        Stack<String> testMessage = new Stack<>();
+        testMessage.push("you're dumber than a box of rocks");
         
         String input = "ANCHOR\n";
         riddle.setScanner(new Scanner(input));
         
-        boolean result = riddle.solveRiddle(testRiddle, null);
+        boolean result = riddle.solveRiddle(testRiddle, testMessage);
         assertTrue("Should return true when riddle is solved", result);
     }
     
@@ -235,12 +237,14 @@ public void testSolveRiddleTenAttempts() {
     riddle.loadRiddles();
     riddle.loadHints();
     String testRiddle = riddle.getRiddleMap().get("ANCHOR");
+    Stack<String> testMessage = new Stack<>();
+    testMessage.push("you're dumber than a box of rocks");
     
     // 2 wrong without hints, then 8 wrong with "n" for each hint offer
     String input = "wrong\nwrong\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\n";
     riddle.setScanner(new Scanner(input));
     
-    boolean result = riddle.solveRiddle(testRiddle, null);
+    boolean result = riddle.solveRiddle(testRiddle, testMessage);
     assertFalse("Should return false after 10 wrong attempts", result);
 }
     
