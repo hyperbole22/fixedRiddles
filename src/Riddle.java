@@ -125,7 +125,7 @@ public class Riddle {
         
         while (!riddlesToDo.isEmpty()) {
             String currentRiddle = riddlesToDo.poll();
-            boolean solved = solveRiddle(currentRiddle);
+            boolean solved = solveRiddle(currentRiddle, randomMessages);
             
             if (!solved) {
                 System.out.println(loss);
@@ -208,7 +208,7 @@ public class Riddle {
                 if (attempts == 11) {
                     return false; // Player lost
                 }
-                System.out.println("wrong! how can you not get it?");
+                //System.out.println("wrong! how can you not get it?");
                 //Print out random message from randomized stack and pop off
                 if (!randomMessages.isEmpty()) {
                     System.out.println(randomMessages.pop());
