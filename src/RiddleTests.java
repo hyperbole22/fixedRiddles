@@ -227,13 +227,13 @@ public class RiddleTests {
         String input = "ANCHOR\n";
         riddle.setScanner(new Scanner(input));
         
-        boolean result = riddle.solveRiddle(testRiddle, testMessage);
+        boolean result = riddle.solveRiddle(testRiddle, testMessage, testMessage);
         assertTrue("Should return true when riddle is solved", result);
     }
     
     // Test 21: Test solveRiddle returns false after 10 wrong attempts
     @Test
-public void testSolveRiddleTenAttempts() {
+    public void testSolveRiddleTenAttempts() {
     riddle.loadRiddles();
     riddle.loadHints();
     String testRiddle = riddle.getRiddleMap().get("ANCHOR");
@@ -244,7 +244,7 @@ public void testSolveRiddleTenAttempts() {
     String input = "wrong\nwrong\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\nn\nwrong\n";
     riddle.setScanner(new Scanner(input));
     
-    boolean result = riddle.solveRiddle(testRiddle, testMessage);
+    boolean result = riddle.solveRiddle(testRiddle, testMessage, testMessage);
     assertFalse("Should return false after 10 wrong attempts", result);
 }
     

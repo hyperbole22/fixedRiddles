@@ -25,6 +25,11 @@ public class Riddle {
 
     public static final String RESET = "\033[0m";
     public static final String YELLOW = "\033[33m";
+
+    public static final String RED = "\033[31m";
+    public static final String GREEN = "\033[32m";
+
+    public static final String PINK = "\033[35m";
     
     private HashMap<String, String> riddleMap;
     private HashMap<String, List<String>> hintMap;
@@ -118,19 +123,37 @@ public class Riddle {
         Queue<String> riddlesToDo = selectRandomRiddles();
         Stack<String> randomMessages = new Stack<>();
         randomMessages.addAll(shuffledMessages());
+        Stack<String> correctMessages = new Stack<>();
+        correctMessages.addAll(correctMessages());
         
         while (!riddlesToDo.isEmpty()) {
             String currentRiddle = riddlesToDo.poll();
-            boolean solved = solveRiddle(currentRiddle, randomMessages);
+            boolean solved = solveRiddle(currentRiddle, randomMessages, correctMessages);
             
             if (!solved) {
-                System.out.println(loss);
+                System.out.println(RED + loss + RESET);
                 
                 return;
             }
         }
         
         displayVictory();
+    }
+
+    public ArrayList<String> correctMessages () {
+        ArrayList<String> correctMessages = new ArrayList<>();
+        correctMessages.add("good job! you actually got one!");
+        correctMessages.add("wow, you got it! I'm shocked");
+        correctMessages.add("maybe you're no as dumb as you look");
+        correctMessages.add("took you long enough");
+        correctMessages.add("you finally got one!");
+        correctMessages.add("good job I guess");
+        correctMessages.add("you did it!");
+        correctMessages.add("impressive... for you");
+        correctMessages.add("you got it right!");
+        correctMessages.add("well done!");
+        Collections.shuffle(correctMessages);
+        return correctMessages;
     }
 
     public ArrayList<String> shuffledMessages() {
@@ -184,7 +207,7 @@ public class Riddle {
      * @param currentRiddle The riddle to solve
      * @return true if solved, false if player exceeded max attempts
      */
-    public boolean solveRiddle(String currentRiddle, Stack randomMessages) {
+    public boolean solveRiddle(String currentRiddle, Stack randomMessages, Stack correctMessages) {
         boolean solved = false;
         int attempts = 0;
         int hintsUsed = 0;
@@ -196,7 +219,10 @@ public class Riddle {
             String userGuess = scanner.nextLine();
             
             if (isCorrectAnswer(currentRiddle, userGuess)) {
-                System.out.println("good job! you actually got one!");
+                if (!correctMessages.isEmpty()) {
+                    System.out.println(GREEN + correctMessages.pop() + RESET);
+                }
+                //System.out.println("good job! you actually got one!");
                 solved = true;
             }
             else {
@@ -207,7 +233,7 @@ public class Riddle {
                 //System.out.println("wrong! how can you not get it?");
                 //Print out random message from randomized stack and pop off
                 if (!randomMessages.isEmpty()) {
-                    System.out.println(randomMessages.pop());
+                    System.out.println(RED + randomMessages.pop() + RESET);
                 }
                 
                 if (attempts >= 3) {
@@ -251,7 +277,7 @@ public class Riddle {
      */
     public int offerHint(String riddle, int attempts, int hintsUsed) {
         if (hintsUsed < 3) {
-            System.out.println("would you like a hint? (y/n): ");
+            System.out.println(PINK +"would you like a hint? (y/n): " + RESET);
             String wantHint = scanner.nextLine();
             
             if (wantHint.equalsIgnoreCase("y")) {
@@ -259,14 +285,14 @@ public class Riddle {
                 hintsUsed++;
             }
             else if (wantHint.equalsIgnoreCase("n")) {
-                System.out.println("really? okay... try again I guess");
+                System.out.println(PINK +"really? okay... try again I guess" + RESET);
             }
             else {
-                System.out.println("that wasn't either option... try again");
+                System.out.println(PINK + "that wasn't either option... try again" + RESET);
             }
         }
         else {
-            System.out.println("you have used all your hints for this riddle, try again!");
+            System.out.println(PINK + "you have used all your hints for this riddle, try again!" + RESET);
         }
         return hintsUsed;
     }
@@ -282,7 +308,7 @@ public class Riddle {
         
         if (hints != null && hintIndex < hints.size()) {
             System.out.println("here is your hint: ");
-            System.out.println(hints.get(hintIndex));
+            System.out.println(PINK + hints.get(hintIndex) + RESET);
         }
     }
     
@@ -290,9 +316,9 @@ public class Riddle {
      * Displays the victory message and trophy
      */
     public void displayVictory() {
-        System.out.println(win);
-        System.out.println("congratulations! you have solved all the riddles!");
-        System.out.println("here is your prize:");
+        System.out.println(GREEN + win);
+        //System.out.println("congratulations! you have solved all the riddles!");
+        System.out.println(GREEN + "here is your prize:");
         System.out.println(YELLOW + " .  .  .  .");
         System.out.println(YELLOW + "/\\_/\\_/\\_/\\");
         System.out.println(YELLOW + "|          |");
