@@ -119,7 +119,7 @@ public class Riddle {
      * Main game loop - plays through all riddles
      */
     public void playGame() {
-        System.out.println(rules+"\n");
+        System.out.println(GREEN+ rules+"\n"+ RESET);
         Queue<String> riddlesToDo = selectRandomRiddles();
         Stack<String> randomMessages = new Stack<>();
         randomMessages.addAll(shuffledMessages());
